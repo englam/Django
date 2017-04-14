@@ -1,0 +1,37 @@
+# virtual environment a new environment
+
+*installation
+pip install virtualenv
+
+
+*build environment
+virtualenv XXXXXXXX
+
+example : 
+virtualenv test_env
+
+
+
+*go to virtual environment
+
+source XXXX/bin/activate
+
+example:
+source test_env/bin/activate
+
+*leave virtual environment
+
+deactivate
+
+*安裝Django , 練習用
+pip install Django==1.7.1
+
+*開啟project
+django-admin.py startproject mysite
+
+*run http server
+cd mysite/
+python manage.py runserver
+url = http://127.0.0.1:8000/
+
+
