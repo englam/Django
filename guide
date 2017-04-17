@@ -34,4 +34,7 @@ cd mysite/
 python manage.py runserver
 url = http://127.0.0.1:8000/
 
+*Create a app
 
+example:
+python manage.py startapp restaurents

@@ -1,0 +1,64 @@
+*開啟project
+django-admin.py startproject my_menu_app
+
+*run http server
+cd /Documents/python/Django/practices/my_menu_app
+or 
+cd my_menu_app/
+
+python manage.py runserver
+url = http://127.0.0.1:8000/
+
+*Create a app
+
+example:
+python manage.py startapp restaurents
+
+
+*建立templates folder在restaurant, 不需要在settings加templates加路徑
+在templates把menu and menu2.html 放入
+
+*settings.py
+
+要把INSTALLED_APPS 加入 restaurents ，因為它是一個app
+
+*urls.py 
+
+要變成這樣
+url(r'^menu/', menu),
+url(r'^menu2/', menu2),
+
+最後再把view的程式寫入即可
+
+
+*python manage.py XXXX
+
+example : python manage.py check 
+用來確認model裡的語法是否有錯
+
+
+*python manage.py makemigrations XXXX
+
+example : python manage.py makemigrations restaurants
+會確認migration,如果模組有異則產生新的migration,並產生模組
+
+
+在migration folder裡面可以看到第一次 model as 0001_initial.py
+
+dependencies ==根據XXX 做了異動
+operations ==實際模組的運行
+
+*modules to SQL language
+
+python manage.py sqlmigrate restaurants XXXX
+
+example : 
+python manage.py sqlmigrate restaurants 0001
+
+python manage.py sqlmigrate restaurants 0002
+
+
+
+
+* to database
+python manage.py migrate restaurants 0002
