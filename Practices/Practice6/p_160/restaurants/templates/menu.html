@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<title>Menu</title>
+		<meta charset='utf-8'>
+		<style>
+			table, th, td{
+				border: 1px solid black;
+				}
+		</style>
+	</head>
+
+	<body>
+
+
+		<p>你的Location: {{path}}</p>
+		<p>Host: {{host}}</p>
+		<p>你的full_path: {{full_path}}</p>
+		<p>你的https support?: {{https_Y}}</p>
+
+		{% for r in restaurants %}
+			<h2>{{r.name}}</h2>
+
+			{% if r.food_set.all %}
+				<p>Total : {{r.food_set.all|length}}  Foods</p>
+
+					<table>
+
+						<tr>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Spicy</th>
+							<th>Comment</th>
+						</tr>
+
+						{%for food in r.food_set.all%}
+						<tr>
+							<td>{{food.name}}</td>
+							<td>{{food.price}}</td>
+
+							<td>{% if food.is_spicy %} Spicy
+								{% else %} Not Spicy
+								{% endif %}
+
+							</td>
+							<td>{{food.comment}}</td>
+						</tr>
+						{%endfor%}
+
+					</table>
+
+			{%else%}
+				<p>No Foods</p>
+			{%endif%}
+		{%endfor%}
+
+
+	</body>
+
+</html>

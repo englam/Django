@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<title>Menu</title>
+		<meta charset='utf-8'>
+	</head>
+
+	<body>
+
+		<p>Total : {{foods|length}}</p>
+
+		{% for food in foods %}
+
+		<h3>第{{forloop.counter}}道菜</h3>
+
+		<ul>
+
+			<li>Food Name 	: {{food.name}}</li>
+			<li>Food Price  : {{food.price}}</li>
+			<li>Food Comment: {{food.comment}}</li>
+			<li>Food Spice  : {{food.is_spice}}</li>
+
+			<li>Food Spice  : 
+				{% if food.is_spice %} Spicy
+				{% else %} Not Spicy
+				{% endif %}
+
+			</li>
+
+		</ul>
+
+		{% empty %}
+			<p>Empty</p>
+
+
+		{% endfor %}
+	</body>
+
+</html>
