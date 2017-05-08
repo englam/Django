@@ -1,0 +1,60 @@
+*開啟project
+django-admin.py startproject my_menu_site
+
+
+
+*在settings.py加入templates folder,為了可以放html檔案進來
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+
+
+
+*建立views.py
+
+增加模組方法如下:
+
+from django import template
+
+
+def here(request):
+	return HttpResponse("I am here !!")
+
+
+def add(request, a,b):
+	s = int(a) + int(b)
+	return HttpResponse(str(s))
+
+
+*編輯url.py, 
+
+--加入模組如下
+
+from views import here, add, math, math2, math3, math4, math5
+
+--設定url 位置
+
+url(r'^here1/$',here), #path , object
+url(r'^(\d{1,2})/plus/(\d{1,2})/$',add), 
+url(r'^(\d{1,2})/math/(\d{1,2})/$',math), 
+url(r'^(\d{1,2})/math2/(\d{1,2})/$',math2),
+url(r'^(\d{1,2})/math3/(\d{1,2})/$',math3),
+url(r'^(\d{1,2})/math4/(\d{1,2})/$',math4),
+url(r'^(\d{1,2})/math5/(\d{1,2})/$',math5),
+
+
+*run http server
+cd /Documents/python/Django/practices/my_menu_app
+or 
+cd my_menu_app/
+
+python manage.py runserver
+url = http://127.0.0.1:8000/
+
+
+
+
+Test URL:
+#http://127.0.0.1:8000/here1/
+#http://127.0.0.1:8000/11/plus/31/
+
+
+
