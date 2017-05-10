@@ -1,0 +1,52 @@
+
+
+
+**********這邊的用法是我們自己定義的login and logout**********
+
+#from views import login, index, logout
+
+url(r'^accounts/login/', login),
+url(r'^accounts/logout/', logout),
+url(r'^index/', index),
+
+templates: login.html, index.html
+
+
+
+
+
+**********Django 內建使用login and logout**********
+
+一開始用login的設定方法
+
+from views import index
+from django.contrib.auth.views import login, logout
+
+* url(r'^accounts/login/', login),  ---對應login page
+* url(r'^accounts/profile/', index), ---因為default的index是指到accounts/profile/, 所以把index加到這邊
+
+
+login.html:
+<form action="{% url 'django.contrib.auth.views.login' %}" method="post">{%csrf_token%}
+
+%url% 這邊指的是Django會查出視圖對應的URL
+
+django.contrib.auth.views.login = /accounts/login/ 的位置
+
+
+-----------1
+如果不用上面的url(r'^accounts/profile/', index)的方法，可以改settings.py
+
+加入：
+LOGIN_REDIRECT_URL = '/index/'
+這樣子login後，會直接指向到/index/這個資料位置
+
+
+-----------2
+第二種方法，可以在 login.html加入下面的參數，重導URL, URL= login函式的變量, (應該是accounts/profile/ -----不確定)
+<input type="hidden" name="next" value="{{next}}"
+
+-----------3
+第三種方法，可以用GET方法，重導, 在login.html,
+改變它的<form action="{% url 'django.contrib.auth.views.login' %}" method="post">{%csrf_token%}
+改成<form action="{% url 'django.contrib.auth.views.login' %}?next=/index/" method="post">{%csrf_token%}

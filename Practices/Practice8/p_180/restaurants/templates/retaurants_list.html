@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<title>Restaurants</title>
+		<meta charset='utf-8'>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+		<style>
+
+			th {text-align: center;}
+			div.menus{
+				text-align:center;
+				padding: 40px 15px;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+
+			<h2>餐廳列表</h2>
+            <h2>Get Method 1</h2>
+
+            <form action="/menu3/" method="get">
+                <table>
+
+                    <tr>
+                        <th>選取</th>
+                        <th>店名</th>
+                        <th>電話</th>
+                        <th>地址</th>
+                        <th>評價</th>
+                    </tr>
+
+                    {%for r in restaurants%}
+                    <tr>
+                        <td><input type="radio" name="id" value="{{r.id}}"></td>
+                        <td>{{r.name}}</td>
+                        <td>{{r.phone_number}}</td>
+                        <td>{{r.address}}</td>
+                        <td><a href="/comment/{{r.id}}/">評論</a></td>
+                    </tr>
+                    {%endfor%}
+
+                </table>
+
+                <input type="submit" value="觀看menu">
+            </form>
+
+            <br><br>
+            <h2>Get Method 2</h2>
+
+            {%for r in restaurants%}
+                    <tr>
+                        <td><a href="/menu3/?id={{r.id}}"> Menu</a></td>
+                        <td>{{r.name}}</td>
+                        <td>{{r.phone_number}}</td>
+                        <td>{{r.address}}</td>
+                    </tr>
+            {%endfor%}
+
+            <br><br>
+            <h2>Get Method 3 (Check menu4 修改內容)</h2>
+
+            {%for r in restaurants%}
+                    <tr>
+                        <td><a href="/menu4/{{r.id}}/"> Menu</a></td>
+                        <td>{{r.name}}</td>
+                        <td>{{r.phone_number}}</td>
+                        <td>{{r.address}}</td>
+                    </tr>
+            {%endfor%}
+
+	</body>
+
+</html>

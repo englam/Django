@@ -1,0 +1,78 @@
+**如果要copy project的話, settings.py自己修改
+
+   check wsgi.py 一下
+
+    其他的基本上都可以copy過去， 可以run
+
+*****
+
+HTTP GET互動式表單
+
+****
+
+*開啟project
+django-admin.py startproject my_menu_app
+
+*run http server
+python manage.py runserver
+
+url = http://127.0.0.1:8000/
+
+
+*************GET***********************
+
+1. 在目錄下的settings.py加入下面指令, 指定templates
+
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+
+2.把welcome.html放到 templates的folder
+
+
+3. 在相同目錄下加一個views.py 內容如下, welcome.html的example:
+
+from django.shortcuts import render_to_response
+from django.http import HttpResponse
+
+def welcome(request):
+    if 'user_name' in request.GET and request.GET['user_name'] !='':
+        return HttpResponse('Welcome!! ' + request.GET['user_name'])
+    else:
+        return render_to_response('welcome.html', locals())
+
+
+4. 在相同目錄下的urls.py
+
+指定views
+from views import welcome
+
+在pattern下加入
+    url(r'^welcome/', welcome),
+
+
+5. test
+http://127.0.0.1:8000/welcome/?user_name=
+http://127.0.0.1:8000/welcome/?user_name=Taiwan
+http://127.0.0.1:8000/welcome/
+
+**************************get id 的test*********************************8
+
+http://127.0.0.1:8000/menu3/
+
+在views.py的 menu3 設定 get(id=1)
+為指定第一個商家的資訊
+
+
+***menu4****
+URL的第三個方法
+
+
+
+***************POST*****************************
+
+1. 增加comment到 urls.py
+2. 在restaurants_list.html加一個 評論的連結
+3. models.py增加一個新的model Comment
+4. 加一個新的comments.html在templates
+5. 在views定義 comment, POST的用法
+6. Django裡面 有限定csrf token要開啟 ，POST才有作用
+

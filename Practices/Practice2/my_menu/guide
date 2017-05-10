@@ -1,0 +1,63 @@
+*開啟project
+django-admin.py startproject my_menu_site
+
+*在settings.py加入templates folder,為了可以放html檔案進來
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+
+裡面有 menu.html 跟 menu2.html
+
+
+*建立views.py
+
+增加模組方法如下:
+
+
+from django.shortcuts import render_to_response ------從Django import render_to_response來使用
+
+設定menu模組, 將對應的參數丟到menu.html裡面
+def menu(request):
+	food = {'name' : '蕃茄炒蛋', 'price' : 60, 'comment' : 'Delicious', 'is_spice': False}
+
+	return render_to_response('menu.html',locals())
+
+設定menu模組, 將對應的參數丟到menu2.html裡面
+def menu2(request):
+	food1 = {'name' : '蕃茄炒蛋', 'price' : 60, 'comment' : 'Delicious', 'is_spice': False}
+	food2 = {'name' : '蒜泥白肉', 'price' : 160, 'comment' : '人氣推薦', 'is_spice': True}
+
+	foods = [food1, food2]
+
+	return render_to_response('menu2.html',locals())
+
+
+*編輯url.py, 
+
+--加入模組如下
+
+from views import menu, menu2
+
+--設定url 位置
+
+url(r'^menu/', menu),
+url(r'^menu2/', menu2),
+
+
+
+
+*run http server
+cd /Documents/python/Django/practices/my_menu
+or 
+cd my_menu/
+
+python manage.py runserver
+url = http://127.0.0.1:8000/
+
+
+
+
+Test URL:
+#http://127.0.0.1:8000/menu/
+#http://127.0.0.1:8000/menu2/
+
+
+

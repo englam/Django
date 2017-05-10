@@ -1,0 +1,12 @@
+
+
+**********Session 自己測試方法********************
+
+python manage.py shell
+
+from django.contrib.sessions.models import Session
+s = Session.objects.all()[0]
+s.expire_date
+s.session_data
+s.get_decoded()
+

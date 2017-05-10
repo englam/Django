@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+
+    <h2>{{r.name}}的評價</h2>
+    {% if r.comment_set.all %}
+        <p>目前共有{{r.comment_set.all|length}}評價</p>
+            <table>
+                <tr>
+                    <td>留言者</td>
+                    <td>時間</td>
+                    <td>評價</td>
+                </tr>
+
+            {%for c in r.comment_set.all%}
+                <tr>
+                    <td>{{c.visitor}}</td>
+                    <td>{{c.date_time| date:"F J, Y"}}</td>
+                    <td>{{c.content}}</td>
+                </tr>
+
+            {%endfor%}
+            </table>
+
+    {%else%}
+        <p>無評價</p>
+    {%endif%}
+
+    <!--單一check error的方法-->
+    <!--{% if error%}
+        <p style="color:red;">*表單輸入不正確，請重新輸入！</p>
+    {% endif %}-->
+
+    {% if f.errors%}
+        <p style="color:red;">請依提示修改問題內容</p>
+    {% endif %}
+
+
+    <form action="" method="post"> {%csrf_token%}
+        <!-- Method 1
+        <table>
+            {{f.as_table}}
+        </table>
+        -->
+
+        <!-- Method 2-->
+
+        <table>
+            <tr>
+                <th><label for="id_visitor">留言者: </label></th>
+                <td>{{f.visitor}}</td>
+                <td>{{f.visitor.errors}}</td>
+            </tr>
+
+            <tr>
+                <th><label for="id_email">電子信箱: </label></th>
+                <td>{{f.email}}</td>
+                <td>{{f.email.errors}}</td>
+            </tr>
+
+            <tr>
+                <th><label for="id_content">評價: </label></th>
+                <td>{{f.content}}</td>
+                <td>{{f.content.errors}}</td>
+            </tr>
+
+
+        </table>
+        <input type="submit" value="給予評價">
+
+
+    </form>
+
+
+
+
+</body>
+</html>

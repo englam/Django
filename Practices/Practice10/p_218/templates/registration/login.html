@@ -1,0 +1,22 @@
+<!doctype html>
+
+<html>
+
+	<title>Welcome222</title>
+
+	<body>
+
+		<form action="{% url 'django.contrib.auth.views.login' %}" method="post">{%csrf_token%}
+
+			<table>
+				{{form.as_table}}
+			</table>
+
+			<input type="submit" value="login" />
+
+		</form>
+
+
+	</body>
+
+</html>

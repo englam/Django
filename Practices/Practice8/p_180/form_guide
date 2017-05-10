@@ -1,0 +1,66 @@
+1. 先在restaurants裡面建立 form.py
+
+2. 將參數寫入, 可參考form.py
+
+3. python manage.py shell
+
+4. 輸入 from restaurants.form import CommentForm
+
+5. 輸入 f= CommentForm()
+
+6. 顯示格式的方式 ， 這個用法可以讓裡面的參數變成我們想要的html格式
+print (f)
+f.as_p()
+f.as_table()
+f.as_ul()
+
+7. http://127.0.0.1:8000/comment/1/  原本的寫法
+    http://127.0.0.1:8000/comment2/1/ 用form的寫法 簡潔多了
+
+
+*************************************************************
+
+Check有無參數綁定用法:
+
+from restaurants.form import CommentForm
+f = CommentForm()
+f.is_bound
+
+f = CommentForm({'visitor':'test'})
+f.is_bound
+
+
+
+有效check:
+
+f = CommentForm({'visitor':'test','content':'good'})
+f.is_valid()
+
+f = CommentForm({'visitor':'test','content':'good','email':'test@ttt'})
+f.is_valid()
+
+f = CommentForm({'visitor':'test','content':'good','email':'test@ttt.com'})
+f.is_valid()
+
+
+error check:
+如果回覆的是空清單 則沒錯誤
+f['email'].errors
+
+下列是email有錯的顯示
+f = CommentForm({'visitor':'test','content':'good','email':'test@ttt'})
+f['email'].errors
+
+下列是全部有錯的顯示
+f.errors()
+
+
+清除錯誤的參數用法
+f.cleaned_data
+
+*********客製化的form**********
+
+widget參數可以客制化的使用html的參數，可參考form.py的content
+
+initial 可以指定的格子 default有參數代入 ，可參考views.py
+

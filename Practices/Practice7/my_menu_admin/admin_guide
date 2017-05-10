@@ -1,0 +1,41 @@
+
+
+****run http server***
+python manage.py runserver
+
+****
+
+username = test
+password = test
+
+Steps:
+1. python manage.py check
+
+
+2. python manage.py makemigrations admin
+
+
+*直接用 因為上面的makemigrations admin 認為內建有的，所以沒出現訊息
+3. python manage.py migrate admin 0001
+4. python manage.py migrate
+
+*create superuser
+4. python manage.py createsuperuser
+
+url = http://127.0.0.1:8000/admin/
+
+
+
+*****register models****
+
+gedit restaurants/admin.py
+
+example:
+
+from restaurants.models import Restaurant, Food
+
+admin.site.register(Restaurant)
+admin.site.register(Food)
+
+註冊完後，就可以用web的方式 增加 或刪除 餐廳跟菜色
+
