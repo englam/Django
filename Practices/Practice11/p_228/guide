@@ -1,0 +1,76 @@
+
+
+*****Register 使用方法********
+1. python manage.py migrate
+
+2. ./manage.py shell
+
+3. add user
+
+from django.contrib.auth.models import User
+new_user = User.objects.create(username="englam", password="test123")
+
+4. modify password
+new_user.set_password("hello123")
+new_user.is_staff = True
+
+5. save user
+new_user.save()
+
+
+6. 在urls.py裡面加入 index, register, login
+
+7. 在views.py定義 index, register, login
+
+8. 在templates裡面放入 index.html, register.html. login.html
+
+-------------------------------------------------------------
+
+1. python manage.py createsuperuser
+
+2. username= test, password = test
+
+3. 在models.py裡面的 comment加入
+
+    class Meta:
+        ordering = ['date_time']
+        permissions = (
+            ("can_comment","Can comment"),
+        )
+
+這樣子是在comment設定 permission(權限)
+
+4. 可以從admin裡面選user, 往下面看就有權限的東西出來了
+http://127.0.0.1:8000/admin/
+
+--------------------------------------------------------------
+
+用command新增及刪除權限的方法
+
+1. python manage.py shell
+
+2. 確認權限的方法如下：
+
+from django.contrib.auth.models import User, Permission
+user = User.objects.get(username='englam')
+perm = Permission.objects.get(codename='can_comment')
+user.has_perm('restaurants.can_comment')
+
+因為一開始並沒有任何權限所以為： False
+
+3. 新增權限
+user.user_permissions.add(perm)
+user.has_perm('restaurants.can_comment')
+
+確認
+user = User.objects.get(username='englam')
+user.has_perm('restaurants.can_comment')
+
+4. 刪除權限
+
+user = User.objects.get(username='englam')
+user.user_permissions.remove(perm)
+
+確認
+user = User.objects.get(username='englam')
+user.has_perm('restaurants.can_comment')

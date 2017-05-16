@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html>
+
+	<title>Welcome</title>
+
+	<body>
+
+		<form action="" method="post">
+
+			<label for="username"> Name : </label> {%csrf_token%}
+			<!--<input id="user_name" type="text" name="user_name" value="{{username}}"> <br/>-->
+			<input id="username" type="text" name="username" value="{{username}}"> <br/>
+
+			<label for="password">Password: </label>
+			<input id="password" type="text" name="password" value=""> <br/>
+
+			<input type="submit" value="Login" />
+
+		</form>
+
+
+	</body>
+
+</html>

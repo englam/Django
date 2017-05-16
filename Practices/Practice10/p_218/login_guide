@@ -25,6 +25,9 @@ templates: login.html, index.html
 
 **********Django 內建使用login and logout**********
 
+
+login.html要放在templates -> registration 目錄底下
+
 一開始用login的設定方法, 修改urls.py
 
 from views import index

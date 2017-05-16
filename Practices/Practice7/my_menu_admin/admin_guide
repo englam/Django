@@ -1,17 +1,20 @@
 
 
-****run http server***
-python manage.py runserver
+*******確認admin module*******
 
-****
 
-username = test
-password = test
+settings.py 裡面，確認django.contrib.admin 是否在裡面
+
+urls.py裡面, 確認 url(r'^admin/', include(admin.site.urls)),
+
+
+***********建立admin的資料庫*****************
 
 Steps:
+驗證模型
 1. python manage.py check
 
-
+為admin建立migrations檔案
 2. python manage.py makemigrations admin
 
 
@@ -19,18 +22,46 @@ Steps:
 3. python manage.py migrate admin 0001
 4. python manage.py migrate
 
-*create superuser
-4. python manage.py createsuperuser
 
+
+*建立 superuser
+5. python manage.py createsuperuser
+
+	Username: test
+
+	Email address: admin@example.com
+
+	Password: test (應該會被檔掉，顯示為****)
+
+	Password (again): test (應該會被檔掉，顯示為****)
+
+	Superuser created successfully.
+
+6. run http server
+
+python manage.py runserver
+
+
+7. admin的URL
 url = http://127.0.0.1:8000/admin/
+
+username = test
+password = test
+
+上面的範例，到admin page後，可以用test, test登入管理系統
+
+
 
 
 
 *****register models****
 
-gedit restaurants/admin.py
+將模組註冊，讓後台管理系統，可以控制這些modules
 
 example:
+
+編輯 restaurants/admin.py
+
 
 from restaurants.models import Restaurant, Food
 
@@ -38,4 +69,18 @@ admin.site.register(Restaurant)
 admin.site.register(Food)
 
 註冊完後，就可以用web的方式 增加 或刪除 餐廳跟菜色
+
+
+**********Modules控制***********
+
+編輯 restaurants/admin.py （可參考原始碼）
+list_display = 後台將名稱列出來
+search_fields = 後台可以做搜尋使用
+list_filter = 做過濾使用
+fields = 限制編輯的表格
+ordering = 排列順序
+
+
+
+
 

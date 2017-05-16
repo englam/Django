@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<title>Restaurants</title>
+		<meta charset='utf-8'>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+
+	</head>
+
+	<body>
+
+			<h2>餐廳列表</h2>
+            <h2>Get Method 1</h2>
+
+
+                <table>
+
+                    <tr>
+                        <th>選取</th>
+                        <th>店名</th>
+                        <th>電話</th>
+                        <th>地址</th>
+
+                        {% if perms.restaurants.can_comment %}
+                            <th>評價</th>
+                        {% endif %}
+
+                    </tr>
+
+
+                    {%for r in restaurants%}
+                    <tr>
+                        <td><input type="radio" name="id" value="{{r.id}}"></td>
+                        <td>{{r.name}}</td>
+                        <td>{{r.phone_number}}</td>
+                        <td>{{r.address}}</td>
+                        <td><a href="/comment/{{r.id}}/">評論</a></td>
+
+                        {% if perms.restaurants.can_comment %}
+                            <td><a href="/comment/{{r.id}}/">Comment</a></td>
+                        {% endif %}
+                    </tr>
+                    {%endfor%}
+
+
+
+                </table>
+
+
+
+
+            <br><br>
+
+
+	</body>
+
+</html>

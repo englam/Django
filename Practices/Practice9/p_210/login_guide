@@ -1,4 +1,9 @@
+***templates****
 
+新增index.html 跟 login.html 練習使用 （可參考原始碼)
+
+在settings.py裡面要加入
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 
 **********這邊的用法是我們自己定義的login and logout**********
