@@ -1,4 +1,4 @@
-*開啟project
+*開啟project Test
 django-admin.py startproject my_menu_site
 
 
