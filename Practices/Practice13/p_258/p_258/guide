@@ -1,0 +1,59 @@
+
+****自定過濾方式
+在restaurants裡面建立templatetags
+在templatetags加入 __init__ and myfilters
+
+在myfilters.py裡面加入
+
+def yes_no(bool_value, show_str):
+    if bool_value:
+        return show_str.partition('/')[0]
+    else:
+        return show_str.partition('/')[2]
+
+之後再將yes_no用 template的modele做 register 的動作
+
+
+
+
+再到menu3.html 寫入  {% load myfilters%}
+
+
+
+
+再用{{ food.is_spice|yes_no:"辣/不辣"}} 判別辣不辣
+這邊是用yes no的方法判別
+
+
+
+
+myfilters裡面的register有二種寫法
+
+1.
+register = template.Library()
+register.filter('yes_no', yes_no)
+
+2.
+
+register = template.Library()
+
+@register.filter(name='yes_no')
+def yes_no(bool_value, show_str):
+
+
+****static放圖片
+在settings.py裡面設定
+
+STATIC_URL = '/static/'
+STATIC_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+在menu3.html
+
+{% load staticfiles %}
+<img src="{% static '/static/img/1.jpg' %}">
+
+這邊還需要修改，還沒成功
+
+static 是放靜態圖片
+assets 放動態圖片

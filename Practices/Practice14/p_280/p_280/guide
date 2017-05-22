@@ -1,0 +1,24 @@
+#用class建立模組
+
+
+# View Class用法
+views.py裡面的 class here2(View):
+要先從from django.views.generic.base import View 匯入
+as_view會轉成dispatch去指定使用指定的方法
+class here2裡面的get，是對應http get的使用
+
+
+
+#TemplateView 用法
+views.py裡面的 class index2(TemplateView):
+要先從from django.views.generic.base import TemplateView匯入
+url(r'^index2/', views.index2.as_view()) 或是
+url(r'^index2/', views.index2.as_view(template_name='index.html'))
+可以參考原始檔
+
+簡便用法：
+在settings.py裡面加入
+TEMPLATE_CONTEXT_PROCESSORS =
+    global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+    )

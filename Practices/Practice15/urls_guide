@@ -1,0 +1,178 @@
+
+# urls 可以使用的方法
+
+1. 基本的 load modules to urls
+
+from django.conf.urls import patterns, include, url
+
+from views import index, register, login
+from django.contrib import admin
+from restaurants.views import list_restaurants
+
+urlpatterns = patterns('',
+
+
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/register/$', register),
+    url(r'^accounts/login/', login),
+    url(r'^index/', index),
+    url(r'^restaurants_list/', list_restaurants),
+)
+
+
+2. 直接load modules, 改url後面的路徑
+import views
+import restaurants.views
+
+urlpatterns = patterns('',
+
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/register/$', views.register),
+    url(r'^accounts/login/', restaurants.views.login),
+    url(r'^index/', restaurants.views.index),
+    url(r'^restaurants_list/', restaurants.views.list_restaurants),
+)
+
+
+
+3. 增加patterns的方式把restaurants.views先加入，讓url看起來比較漂亮
+import views
+import restaurants.views
+
+urlpatterns = patterns('restaurants.views',
+
+    url(r'^accounts/login/', 'login'),
+    url(r'^index/', 'index'),
+    url(r'^restaurants_list/', 'list_restaurants'),
+)
+
+
+4. 多個patterns使用方法
+
+urlpatterns = patterns('restaurants.views',
+
+    url(r'^accounts/login/', 'login'),
+    url(r'^index/', 'index'),
+    url(r'^restaurants_list/', 'list_restaurants'),
+)
+
+urlpatterns += patterns('django.contrib.auth.views',
+
+    url(r'^accounts/login/', 'login', {'template_name':'login.html}),
+    url(r'^index/', 'logout'),
+
+)
+
+urlpatterns += patterns('mysite.views',
+
+    url(r'^index/$', 'index'),
+    url(r'^register/$', 'register'),
+
+)
+
+
+5. 正式上線時 debug的url用法
+
+if settings.DEBUG:
+    urlpatterns += patterns(
+        url(r'^test/$', 'test'),
+    )
+
+
+
+
+#url取參數方式
+
+先前用的方法:
+url(r'^(\d{1,2})/math/(\d{1,2})/$',math),
+
+def math(request, a, b):
+	a = int(a)
+	b = int(b)
+
+
+這樣可以把參數代入到 a, b
+
+
+指定參數的用法:
+
+url(r'^(?P<p2>\d{1,2})/math/(?P<p2>\d{1,2})/$',math),
+
+
+
+def math(request, p1, p2):
+	a = int(p1)
+	b = int(p2)
+
+
+指定p1 and p2的方法
+
+(?P<p2>\d{1,2}) <----------指定p2
+
+
+
+#傳遞額外的參數url
+
+先前用的方法:
+
+views.py-
+def menu(request, id=1):
+
+urls.py-
+url(r'^menu/(\d{1,2})/$',menu),
+url(r'^firstmenu/$',menu),
+
+指定參數的用法:
+urls.py-
+url(r'^menu/(\d{1,2})/$',menu),
+url(r'^firstmenu/$',menu,{'id':'1'}),
+url(r'^firstmenu/$',menu,{'id':'2'}),
+
+
+假設有二個modules在views很多地方很像可以用下面的方法:
+
+先前用的方法:
+url(r'^test1_list/$', 'test1'),
+url(r'^test2_list/$', 'test2'),
+
+在views.py裡面會定義二個參數使用, test1_list, test2_list
+
+
+可以改成:
+url(r'^test1_list/$', 'test1', {'model': restaurants.models.test1}),
+url(r'^test2_list/$', 'test2'), {'model': auth.models.test2}),
+
+views.py定義list來使用
+
+def list(request, model):
+    objs = model.objects.all()
+    return render(
+        request, '{0}_list.html',format(model.__name__.lower()),locals()
+    )
+
+
+說明：
+def list(request, model) 的model, 因為在url指定 model對應的參數
+model.__name__.lower() <--取出model的名稱, restaurants.models.test1 <--取出test1
+{0}_list.html <--可以取出對應的名稱的html, ex, test1_list.html
+
+
+
+#url 階層使用
+
+settings.py
+這裡面有設定 ROOT_URLCONF
+ROOT_URLCONF = 'mysite.urls' , default會指定 mysite/mysite/urls.py
+
+
+如果在 mysite/restaurants/urls.py, 則可以指定restaurants.urls去找urls
+url(r'^restaurants/$', include('restaurants.urls')),
+
+
+
+
+
+
+
+
+

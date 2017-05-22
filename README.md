@@ -1,6 +1,7 @@
 # Django
 
 
+20170522 Upload Practice 12-15 and modify wiki
 
 20170516 upload Practice 11 and modify wiki, 但是後面設定權限的部份沒做完
 

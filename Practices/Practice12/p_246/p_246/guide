@@ -1,0 +1,46 @@
+*使用include and extends方式，把html內容代入
+
+1. test.html 是最原始寫入內容的方法
+2. test1.html是用include的方法, 它將test1_body.html的內容代入
+3. test2.html是用extend的方法,把整個test2_final.html的內容代入
+   再由test2.html裡面的參數設定要修改的內容
+
+4. view.py and urls.py裡面的test1, test2, test3 for testing
+
+
+*def 回傳值使用方法
+
+1. from django import template
+   用法： t = template.Template('<html> s = {{s}} <br> d = {{d}} <br> p = {{p}} <br>q = {{q}}</html>')
+   意思是可以用寫的方式把html代入
+
+2. from django.template.loader import get_template
+   用法如下：
+    t = get_template('test5.html')
+    a = 1
+    b = 2
+    c = template.Context({'a':a,'b':b})
+    return (HttpResponse(t.render(c)))
+
+    意思get_template 把 test5.html的內容代入
+    test5.html有設定代入 a, b 的方法
+    c再把a, b 代入
+
+3. views.py and urls.py裡 test5, test5是基本的模組代入方法
+
+4. views.py and urls.py裡 test7, 利用test6 回傳的參數代入到test7利用，可以避免重覆下參數
+    RequestContext的用法
+
+5. views.py and urls.py裡 test9, 利用test6 回傳的參數代入到test7利用，可以避免重覆下參數
+    render_to_response + RequestContext的用法
+
+6. settings.py
+
+    from django.conf import global_settings
+    TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + ("p_246.views.test6",)
+
+    用來簡化test9的方式，讓它可以從settings.py裡面就將test6的參數代入
+
+   views.py and urls.py裡 test10
+
+7. test11為render的用法，因為已經設定settings要支援test6參數代入，所以用render可以直接代入

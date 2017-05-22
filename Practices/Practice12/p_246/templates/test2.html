@@ -1,0 +1,20 @@
+{% extends 'test2_final.html' %}
+
+{% block title%}首頁{% endblock %}
+
+{% block h2%}歡迎 測試三 利用 繼承將 base.html的內容代入{% endblock %}
+
+
+{% block content1 %}
+用法： 以test2.html為主，test2.html會將test2_final.html的內容代入
+{% endblock %}
+
+{% block content2 %}
+第一行 extends將test2_final.html代入
+{% endblock %}
+
+{% block content3 %}
+第二行 block title是對應到test2_final.html的title的位置，在test2這邊只要設定想要的參數即可
+
+下面以此類推
+{% endblock %}
