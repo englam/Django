@@ -1,0 +1,125 @@
+
+Steps:
+
+---------------儲存data到database--------------
+
+python manage.py shell
+
+from restaurants.models import Restaurant, Food
+r1 = Restaurant(name='bistro_1', phone_number='0123456-78', address='road1')
+r1
+r1.save()
+
+r2 = Restaurant(name='bistro_2', phone_number='999999-78', address='road2')
+r2
+r2.save()
+
+
+---------------------得到餐廳的電話及id-----------------------------
+
+restaurants = Restaurant.objects.all()
+
+
+print(restaurants)
+r1 = restaurants[0]
+print(r1.phone_number)
+print(r1.id)
+
+
+
+-------------------------------------------------
+
+r = Restaurant.objects.get(name='bistro_1')
+print (r)
+
+----------------------------------------------
+
+restaurant = Restaurant.objects.filter(name='bistro_1')
+print(restaurant)
+
+
+----------------------------------------------
+restaurant = Restaurant.objects.filter(name='bistro_1',phone_number='0123456-78')
+print(restaurant)
+
+
+----------------------------------------------
+restaurant = Restaurant.objects.filter(name_contains='bistro')
+print(restaurant)
+
+
+
+----------------------------------------------
+
+
+r = Restaurant.objects.get(name='bistro_1')
+f1 = Food(name='宮保雞丁',price=120,comment='Spicy',is_spicy=True,restaurant = r)
+f1.save()
+f2 = Food(name='炒青菜',price=85,comment='different',is_spicy=False,restaurant = r)
+f2.save()
+
+
+Food.objects.all()
+Food.objects.order_by('price')
+Food.objects.order_by('price','name')          # 1 price, 2 name 排序
+Food.objects.order_by('name','price')          # 1 name, 2 price 排序
+Food.objects.order_by('-price')          	   # 1 price 反向排序
+
+------------------過濾的用法----------------------------
+
+from restaurants.models import Restaurant, Food
+foods = Food.objects.order_by('price')
+print(foods)
+
+foods = foods.filter(is_spicy=True)
+foods = foods.get(name_contains='宮保')
+
+foods = Food.objects.order_by('price').filter(is_spicy=True)
+
+------------------從菜單得到餐廳----------------------------
+
+food = Food.objects.get(name='宮保雞丁')
+print(food.restaurant)
+
+-----------------得到餐廳的菜單-----------------------------
+
+r = Restaurant.objects.get(name='bistro_1')
+r.food_set.all()
+
+
+
+
+
+
+
+
+
+---------------修改 更新 刪除 資料---------------
+修改 更新
+method 1 :
+
+food = Food.objects.get(name='宮保雞丁')
+food.price = 200
+food.save()
+
+
+method 2 : 
+
+Food.objects.filter(name='宮保雞丁').update(price=200)
+
+
+將餐廳所有的food的price都改成100元 : 
+
+Restaurant.objects.get(name='bistro_1').food_set.update(price=100)
+
+
+
+刪除
+food = Food.objects.get(name='宮保雞丁')
+f.delete()
+
+刪除 all
+Food.objects.all().delete()
+
+
+

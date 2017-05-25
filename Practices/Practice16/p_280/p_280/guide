@@ -1,0 +1,101 @@
+#用class建立模組
+
+
+# View Class用法
+views.py裡面的 class here2(View):
+要先從from django.views.generic.base import View 匯入
+as_view會轉成dispatch去指定使用指定的方法
+class here2裡面的get，是對應http get的使用
+
+
+
+#TemplateView 用法
+views.py裡面的 class index2(TemplateView):
+要先從from django.views.generic.base import TemplateView匯入
+url(r'^index2/', views.index2.as_view()) 或是
+url(r'^index2/', views.index2.as_view(template_name='index.html'))
+可以參考原始檔
+
+簡便用法：
+在settings.py裡面加入
+TEMPLATE_CONTEXT_PROCESSORS =
+    global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+    )
+
+
+
+# ListView用法
+
+views.py裡面的 list_restaurants2(ListView):
+from django.views.generic.list import ListView
+url(r'^list_restaurants2/', views.list_restaurants2.as_view()),
+可以參考原始檔
+
+如要使用 require_login的方法，可以在urls.py 或是views.py裡面定義
+
+urls.py:
+from django.contrib.auth.decorators import login_required
+url(r'^list_restaurants2/', login_required(views.list_restaurants2.as_view()))
+
+views.py:
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(list_restaurants2,self).dispatch(request,*args, **kwargs)
+
+
+可以參考原始碼
+
+
+
+
+# DetailView用法
+
+views.py裡面的 class menu3View(DetailView):
+from django.views.generic.detail import DetailView
+url(r'^menu/(?P<pk>\d+)/$', views.menu3View.as_view())
+
+
+在views.py裡的
+
+pk_url_kwarg = 'id'
+
+是用來改變:
+urls.py裡面的url(r'^menu/(?P<pk>\d+)/$', views.menu3View.as_view())
+可以寫成:
+url(r'^menu/(?P<id>\d+)/$', views.menu3View.as_view()),
+
+將原本的pk改成id的方法，或是自己想要的名稱
+
+
+要使用 HttpResponseRedirect, 可以參考views.py
+class menu3View(DetailView)
+
+
+
+部份的code沒完全好，需要再修改，可以參考加以修改
+
+#def get(self, request, pk, *args, **kwargs):
+    #try:
+        #return super(menu3View, self).get(self, request, pk=pk, *args, **kwargs)
+    #except Http404:
+        #return HttpResponseRedirect('/restaurants_list/')
+
+
+
+
+# FormView用法
+
+from django.views.generic.edit import FormView
+views.py裡面的 comment2(FormView)
+url(r'^comment2/(?P<pk>\d+)/$', views.comment2.as_view())
+
+
+部份的code沒完全好，需要再修改，可以參考加以修改
+
+#def get_context_data(self, **kwargs):
+    #self.object = self.get_object()
+    #return super(CommentView, self).get_context_data(object=self.object, **kwargs)
