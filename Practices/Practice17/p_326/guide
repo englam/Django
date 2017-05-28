@@ -1,0 +1,111 @@
+
+*開啟project
+django-admin.py startproject my_menu_app
+
+
+*開啟app
+python manage.py startapp zoo
+
+* 開始測試
+
+python manage.py test  <--------對於Django每個test_開頭的函式做測試
+python manage.py test zoo <-----對於zoo下所有的測試檔做測試
+python manage.py test zoo.tests <-----對於zoo下的tests做測試
+python manage.py test zoo.tests.AnimalTestCase <-----對於zoo下的AnimalTestCase做測試
+python manage.py test zoo.tests.AnimalTestCase.test_dog_says <-----對於zoo下的AnimalTestCase的test_dog_says做測試
+
+
+*Django Test
+
+要注意測試的函式都需要以"test_"開頭
+在zoo/models.py,
+
+編輯models.py, 增加dog and cat的函式
+
+編輯test.py 用來測試model,
+
+增加test_dog_says and test_cat_says, self.assertEqual(dog.says(), 'Woof') 用來判別參數
+
+python manage.py test 開始測試
+
+
+*Refer to p_210
+
+先到p_210 directory
+
+1. python manage.py runserver
+
+2. python manage.py shell
+
+3. 下面的指令可以模擬client, 目前只試出來在本身的directory測試
+
+from django.test import client
+c=client.Client()
+response = c.get('/index/')
+response.status_code
+response.content
+
+http get:
+c.get('/index/?param=value')  等於 c.get('/index/', {'param': 'value'}) 這二個的用法相等
+
+http post:
+c.post('/post/url', {'field' : 'value'})
+
+夾檔
+c.post('/post/url', {'attachment' : open('file.txt','r')})
+
+CSRF
+c=client.Client(enforce_csrf_checks=True)
+
+
+
+4. 寫test cases
+
+a. 在p_210新增一個test.py
+b. python manage.py test
+c. 可以檢查出結果
+
+self.assertEqual(resp.status_code, 200) <----檢查 http status
+self.assertContains(resp, '<h2>Welcome Login111</h2>') <----檢查 contain
+self.assertTemplateUsed(resp, 'index.html') <----檢查 template裡的index.html
+
+
+5. Login and Logout Test (Django內建)
+
+test_login_and_logout
+
+測試login
+self.c.login(username='cisco',password='cisco')
+resp = self.c.get('/accounts/login/')
+self.assertEqual(resp.status_code, 200)
+self.assertTemplateUsed(resp, 'login.html')
+
+
+測試logout
+self.c.logout()
+resp = self.c.get('/accounts/logout/')
+self.assertRedirects(resp, '/index/')
+
+
+
+
+6. Login and Logout Test (http protocol)
+
+test_login_and_logout_by_http_protocol
+
+resp = self.c.post('/accounts/login/', {'username':'cisco', 'password':'cisco'},follow=True)
+self.assertEqual(resp.redirect_chain,[('http://testserver/index/', 302)])
+
+
+testserver照著打就可以, 為測試使用的url
+
+
+測試login
+resp = self.c.get('/accounts/login/')
+self.assertEqual(resp.status_code, 200)
+self.assertTemplateUsed(resp, 'login.html')
+
+測試logout
+self.c.get('/accounts/logout/')
+resp = self.c.get('/accounts/logout/')
+self.assertRedirects(resp, '/index/')

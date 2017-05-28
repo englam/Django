@@ -1,5 +1,6 @@
 # Django
 
+20170528 Upload Practice 16 --Django測試
 
 20170522 Upload Practice 12-15 and modify wiki
 
@@ -14,3 +15,11 @@
 20170417 Upload Practice 2, 3, 4 , for Django app and sqalite example
 
 20170414 Upload  Practice1 and Guide
+
+
+
+
+-------------------------------------------
+
+
+Django 資料庫跟佈署還沒讀
