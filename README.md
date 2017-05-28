@@ -1,6 +1,7 @@
 # Django
 
-20170528 Upload Practice 16 --Django測試
+20170528 Upload Practice 17 --Django測試
+		Practice 16 --Cass模組
 
 20170522 Upload Practice 12-15 and modify wiki
 
